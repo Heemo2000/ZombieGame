@@ -1,0 +1,145 @@
+{
+  "ver": "2.3.13",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "15b34ae7-31b4-4f5a-9013-3a8950ae9263",
+  "files": [],
+  "subMetas": {
+    "16491": {
+      "importer": "texture",
+      "uuid": "15b34ae7-31b4-4f5a-9013-3a8950ae9263@16491",
+      "displayName": "",
+      "id": "16491",
+      "name": "Map #18.texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": false,
+        "imageUuidOrDatabaseUri": "db://assets/Textures/US_soldier_simple.tga"
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "53b13": {
+      "importer": "gltf-mesh",
+      "uuid": "15b34ae7-31b4-4f5a-9013-3a8950ae9263@53b13",
+      "displayName": "",
+      "id": "53b13",
+      "name": "MESH_US_Infantry_simple.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 1006
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "438fe": {
+      "importer": "gltf-skeleton",
+      "uuid": "15b34ae7-31b4-4f5a-9013-3a8950ae9263@438fe",
+      "displayName": "",
+      "id": "438fe",
+      "name": "UnnamedSkeleton.skeleton",
+      "userData": {
+        "gltfIndex": 0,
+        "jointsLength": 20
+      },
+      "ver": "1.0.1",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "b42b8": {
+      "importer": "gltf-material",
+      "uuid": "15b34ae7-31b4-4f5a-9013-3a8950ae9263@b42b8",
+      "displayName": "",
+      "id": "b42b8",
+      "name": "US_Soldier_simple.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "03c01": {
+      "importer": "gltf-scene",
+      "uuid": "15b34ae7-31b4-4f5a-9013-3a8950ae9263@03c01",
+      "displayName": "",
+      "id": "03c01",
+      "name": "ToonSoldier_WW2_demo.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [
+      {
+        "name": "Map #18",
+        "uri": "db://assets/Textures/US_soldier_simple.tga"
+      }
+    ],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "15b34ae7-31b4-4f5a-9013-3a8950ae9263@53b13"
+      ],
+      "skeletons": [
+        "15b34ae7-31b4-4f5a-9013-3a8950ae9263@438fe"
+      ],
+      "textures": [
+        "15b34ae7-31b4-4f5a-9013-3a8950ae9263@16491"
+      ],
+      "materials": [
+        "15b34ae7-31b4-4f5a-9013-3a8950ae9263@b42b8"
+      ],
+      "scenes": [
+        "15b34ae7-31b4-4f5a-9013-3a8950ae9263@03c01"
+      ]
+    }
+  }
+}

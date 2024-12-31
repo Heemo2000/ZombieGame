@@ -1,0 +1,29 @@
+{
+  "__version__": "1.0.6",
+  "general": {
+    "highQuality": false
+  },
+  "custom_joint_texture_layouts": [],
+  "physics": {
+    "collisionGroups": [
+      {
+        "index": 1,
+        "name": "PLAYER"
+      },
+      {
+        "index": 2,
+        "name": "GROUND"
+      },
+      {
+        "index": 3,
+        "name": "WORLD"
+      }
+    ],
+    "collisionMatrix": {
+      "0": 9,
+      "1": 12,
+      "2": 2,
+      "3": 11
+    }
+  }
+}
