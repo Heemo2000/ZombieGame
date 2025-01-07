@@ -1,4 +1,4 @@
-import { math, Vec3, Quat, Mat3, random } from 'cc';
+import { math, Vec3, Quat, Mat3, random, geometry } from 'cc';
 
 
 export class MathUtility 
@@ -56,6 +56,13 @@ export class MathUtility
         // Interpolate
         return a + delta * t;
     }
+
+    public static getBoundingBoxDimensions(position: Vec3, halfExtents: Vec3): geometry.AABB
+    {
+        let dimensions = geometry.AABB.create(position.x, position.y, position.z, 
+                                              halfExtents.x, halfExtents.y, halfExtents.z);
+        return dimensions;
+    } 
 }
 
 

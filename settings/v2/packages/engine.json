@@ -11,6 +11,9 @@
       "gfx-webgl2": {
         "_value": true
       },
+      "gfx-webgpu": {
+        "_value": false
+      },
       "animation": {
         "_value": true
       },
@@ -19,6 +22,9 @@
       },
       "3d": {
         "_value": true
+      },
+      "meshopt": {
+        "_value": false
       },
       "2d": {
         "_value": true
@@ -118,11 +124,21 @@
       "procedural-animation": {
         "_value": true
       },
-      "graphics": {
-        "_value": true
+      "custom-pipeline-post-process": {
+        "_value": false
       },
       "render-pipeline": {
+        "_value": true,
         "_option": "legacy-pipeline"
+      },
+      "custom-pipeline": {
+        "_value": true
+      },
+      "legacy-pipeline": {
+        "_value": false
+      },
+      "graphics": {
+        "_value": true
       }
     },
     "flags": {},

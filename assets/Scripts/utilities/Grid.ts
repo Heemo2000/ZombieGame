@@ -1,3 +1,4 @@
+import { error } from "cc";
 
 
 export class Grid<T>{
@@ -11,7 +12,7 @@ export class Grid<T>{
     {
         this.width = width;
         this.height = height;
-
+        
         for(let i = 0; i < width; i++)
         {
             let container: T[] = [];
@@ -36,6 +37,27 @@ export class Grid<T>{
         }
 
         return undefined;
+    }
+
+    public setItem(item: T, i: number, j: number)
+    {
+        if(!this.isIndexInBounds(i,j))
+        {
+            error("Specified position is out of bounds!");
+            return;
+        }
+
+        this.array[i][j] = item;
+    }
+
+    public getWidth(): number
+    {
+        return this.width;
+    }
+
+    public getHeight(): number
+    {
+        return this.height;
     }
 }
 

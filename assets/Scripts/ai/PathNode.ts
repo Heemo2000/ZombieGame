@@ -1,25 +1,92 @@
 import { _decorator, Vec2, Vec3 } from 'cc';
 import { Grid } from '../utilities/Grid';
+import { Constants } from '../core/Constants';
 const { ccclass, property } = _decorator;
 
 export class PathNode {
     
-    private worldPos: Vec3 = Vec3.ZERO.clone();
     private inGridPos: Vec2 = Vec2.ZERO.clone();
-    private grid: Grid<PathNode> = null;
     private gCost: number = 0;
-    private hCost: number = 0;
+    private rhsCost: number = 0;
     private walkable: boolean = false;
+    private key1: number = Constants.MAX_INT_VALUE;
+    public key2: number = Constants.MAX_INT_VALUE;
 
-    constructor(worldPos: Vec3, inGridPos: Vec2, walkable: boolean, grid: Grid<PathNode>)
-    {
-        this.worldPos = worldPos;
+
+    constructor(inGridPos: Vec2, walkable: boolean)
+    {    
         this.inGridPos = inGridPos;
         this.walkable = walkable;
-        this.grid = grid;
+        this.gCost = 0;
+        this.rhsCost = 0;
+        this.key1 = Constants.MAX_INT_VALUE;
+        this.key2 = Constants.MAX_INT_VALUE;
     }
 
-    
+    public getKey1(): number
+    {
+        return this.key1;
+    }
+
+    public setKey1(key: number): void
+    {
+        this.key1 = key;
+    }
+
+    public getKey2(): number
+    {
+        return this.key2;
+    }
+
+    public setKey2(key: number): void
+    {
+        this.key2 = key;
+    }
+
+    public getInGridPos(): Vec2
+    {
+        return this.inGridPos;
+    }
+
+    public setInGridPos(pos: Vec2): void
+    {
+        this.inGridPos = pos;
+    }
+
+    public getGCost(): number
+    {
+        return this.gCost;
+    }
+
+    public setGCost(cost: number): void
+    {
+        this.gCost = cost;
+    }
+
+    public isWalkable(): boolean
+    {
+        return this.walkable;
+    }
+
+    public setWalkable(status: boolean): void
+    {
+        this.walkable = status;
+    }
+
+    public getRHSCost(): number
+    {
+        return this.rhsCost;
+    }
+
+    public setRHSCost(cost: number): void
+    {
+        this.rhsCost = cost;
+    }
+
+    public equals(node: PathNode): boolean
+    {
+        return this.equals(node);
+    }
 }
 
 
