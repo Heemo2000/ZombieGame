@@ -1,16 +1,17 @@
-import { _decorator, Vec2, Vec3 } from 'cc';
+import { _decorator, Vec2, Vec3, log } from 'cc';
 import { Grid } from '../utilities/Grid';
+import { MathUtility } from '../utilities/MathUtility';
 import { Constants } from '../core/Constants';
 const { ccclass, property } = _decorator;
 
-export class PathNode {
+export class DStarPathNode {
     
     private inGridPos: Vec2 = Vec2.ZERO.clone();
     private gCost: number = 0;
     private rhsCost: number = 0;
     private walkable: boolean = false;
     private key1: number = Constants.MAX_INT_VALUE;
-    public key2: number = Constants.MAX_INT_VALUE;
+    private key2: number = Constants.MAX_INT_VALUE;
 
 
     constructor(inGridPos: Vec2, walkable: boolean)
@@ -83,9 +84,19 @@ export class PathNode {
         this.rhsCost = cost;
     }
 
-    public equals(node: PathNode): boolean
+    public equals(node: DStarPathNode): boolean
     {
-        return this.equals(node);
+        if(node == null || node == undefined)
+        {
+            return false;
+        }
+
+
+        return MathUtility.checkVec2Equal(this.getInGridPos(), node.getInGridPos()) &&
+               this.getGCost() == node.getGCost() &&
+               this.getKey1() == node.getKey1() &&
+               this.getKey2() == node.getKey2() &&
+               this.getRHSCost() == node.getRHSCost();
     }
 }
 

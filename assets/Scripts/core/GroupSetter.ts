@@ -1,10 +1,13 @@
-import { _decorator, Component, Node, Collider, RigidBody, error, log } from 'cc';
+import { _decorator, Component, Node, Collider, RigidBody, error, log, Enum } from 'cc';
+import { PhysicsGroup } from './PhysicsGroup';
 const { ccclass, property } = _decorator;
 
 @ccclass('GroupSetter')
 export class GroupSetter extends Component {
-    @property
-    private groupNumber: number = 0;
+    @property({
+        type: Enum(PhysicsGroup)
+    })
+    private physicsGroup: PhysicsGroup = PhysicsGroup.DEFAULT;
 
     private collider: Collider = null;
 
@@ -16,7 +19,7 @@ export class GroupSetter extends Component {
             return;
         }
 
-        let group = 1 << this.groupNumber;
+        let group = this.physicsGroup;
         this.collider.setGroup(group);
         this.collider.setMask(group);
         

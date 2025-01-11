@@ -113,12 +113,12 @@ export class PriorityQueue<T> {
         }
     }
 
-    public contains(value: T): boolean
+    public contains(value: T, equalFunc: (first:T, second: T)=> boolean): boolean
     {
         let current = this.head;
         while(current != null)
         {
-            if(current.getValue() == value)
+            if(equalFunc(current.getValue(), value))
             {
                 return true;
             }
@@ -128,19 +128,19 @@ export class PriorityQueue<T> {
         return false;
     }
 
-    public removeValue(value: T): void
+    public removeValue(value: T, equalFunc: (first:T, second: T)=> boolean): boolean
     {
         if(this.head == null)
         {
             warn("Priority queue is already empty.");
-            return;
+            return false;
         }
 
         let previous: LinkedListNode<T> = null;
         let current = this.head;
         while(current != null)
         {
-            if(current.getValue() == value)
+            if(equalFunc(current.getValue(), value))
             {
                 break;
             }
@@ -148,6 +148,10 @@ export class PriorityQueue<T> {
             current = current.getNext();
         }
 
+        if(current == null)
+        {
+            return false;
+        }
         if(previous == null)
         {
             this.head = null;
@@ -157,6 +161,8 @@ export class PriorityQueue<T> {
             previous.setNext(current.getNext());
             current = null;
         }
+
+        return true;
     }
 }
 

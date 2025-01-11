@@ -80,7 +80,7 @@
         "_value": true
       },
       "debug-renderer": {
-        "_value": false
+        "_value": true
       },
       "particle-2d": {
         "_value": false
@@ -148,6 +148,7 @@
       "animation",
       "audio",
       "base",
+      "debug-renderer",
       "geometry-renderer",
       "gfx-webgl",
       "gfx-webgl2",

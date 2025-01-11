@@ -1,8 +1,9 @@
-import { math, Vec3, Quat, Mat3, random, geometry } from 'cc';
+import { math, Vec2, Vec3, Quat, Mat3, random, geometry, log } from 'cc';
 
 
 export class MathUtility 
 {
+    private static epsilon: number = 0.005;
     public static getRotation(forward: Vec3, right: Vec3) : Quat
     {
         if(forward.lengthSqr() > 1.0 * 1.0)
@@ -62,7 +63,26 @@ export class MathUtility
         let dimensions = geometry.AABB.create(position.x, position.y, position.z, 
                                               halfExtents.x, halfExtents.y, halfExtents.z);
         return dimensions;
-    } 
+    }
+    
+    public static checkVec2Equal(first: Vec2, second: Vec2): boolean
+    {
+        let xDifference = Math.abs(first.x - second.x);
+        let yDifference = Math.abs(first.y - second.y);
+       
+        //log("x difference: " + xDifference);
+        //log("y difference: " + yDifference);
+
+        return xDifference <= MathUtility.epsilon &&
+               yDifference <= MathUtility.epsilon;
+    }
+
+    public static checkVec3Equal(first: Vec3, second: Vec3): boolean
+    {
+        return Math.abs(first.x - second.x) <= MathUtility.epsilon &&
+               Math.abs(first.y - second.y) <= MathUtility.epsilon &&
+               Math.abs(first.z - second.z) <= MathUtility.epsilon;
+    }
 }
 
 
