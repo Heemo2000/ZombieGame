@@ -22,6 +22,7 @@ export class PathfindingTest extends Component {
     }
 
     protected update(dt: number): void {
+        //AStarPathfinding.getInstance().showGrid();
         AStarPathfinding.getInstance().showPath();
     }
 }

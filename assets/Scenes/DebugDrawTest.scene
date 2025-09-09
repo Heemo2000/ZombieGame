@@ -297,7 +297,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
+      "x": -5,
       "y": 0,
       "z": 4.033
     },
@@ -399,7 +399,7 @@
       "__type__": "cc.Vec3",
       "x": -11,
       "y": 0,
-      "z": 22.033
+      "z": 23
     },
     "_lrot": {
       "__type__": "cc.Quat",
@@ -744,7 +744,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "physicsGroup": 4,
+    "physicsGroup": 8,
     "_id": "1bMXDm2/NPFJh8xdjDmDi7"
   },
   {

@@ -64,7 +64,11 @@ export class AStarPathfinding extends Component {
                 node.setWalkable(walkable);
 
                 //log("Is walkable on (" + i + ", " + j + "): " + walkable);
-                
+                if(!walkable)
+                {
+                    log("Node at (" + i + ", " + j + "): is not walkable");    
+                }               
+
                 this.grid.setItem(node,i,j);
             }
         }
@@ -130,6 +134,7 @@ export class AStarPathfinding extends Component {
             //log("current node position: " + currentNode.getInGridPos().toString());
             if(currentNode.equals(endNode))
             {
+                findPathSuccess = true;
                 break;
             }
 
@@ -187,7 +192,6 @@ export class AStarPathfinding extends Component {
             for(let j = 0; j < this.height; j++)
             {
                 let worldPosition = this.getWorldPosition(i,j);
-
                 let showColor = Color.RED;
 
                 VisualDebug.getInstance().drawWireCube(worldPosition, Vec3.ONE.clone().multiplyScalar(this.cellSize), showColor);    
