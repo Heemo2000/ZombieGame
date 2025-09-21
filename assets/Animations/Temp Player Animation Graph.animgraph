@@ -1,0 +1,217 @@
+[
+  {
+    "__type__": "cc.animation.AnimationGraph",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "_native": "",
+    "_layers": [
+      {
+        "__id__": 1
+      }
+    ],
+    "_variables": {
+      "move": {
+        "__id__": 16
+      }
+    }
+  },
+  {
+    "__type__": "cc.animation.Layer",
+    "_stateMachine": {
+      "__id__": 2
+    },
+    "name": "",
+    "weight": 1,
+    "mask": null,
+    "additive": false,
+    "_stashes": {}
+  },
+  {
+    "__type__": "cc.animation.StateMachine",
+    "__editorExtras__": {
+      "name": "",
+      "id": "38270a96-2b65-41a0-b4b7-10fe60f86f6b",
+      "clone": null
+    },
+    "_states": [
+      {
+        "__id__": 3
+      },
+      {
+        "__id__": 4
+      },
+      {
+        "__id__": 5
+      },
+      {
+        "__id__": 6
+      }
+    ],
+    "_transitions": [
+      {
+        "__id__": 15
+      }
+    ],
+    "_entryState": {
+      "__id__": 3
+    },
+    "_exitState": {
+      "__id__": 4
+    },
+    "_anyState": {
+      "__id__": 5
+    }
+  },
+  {
+    "__type__": "cc.animation.State",
+    "__editorExtras__": {
+      "name": "",
+      "id": "ba9ca6a2-1b2b-4cae-b81f-f8761ad247b0",
+      "clone": null,
+      "centerX": -125,
+      "centerY": 0
+    },
+    "name": "Entry"
+  },
+  {
+    "__type__": "cc.animation.State",
+    "__editorExtras__": {
+      "name": "",
+      "id": "be10414a-440a-41e4-a2c1-6b5de46145e0",
+      "clone": null,
+      "centerX": 125,
+      "centerY": 0
+    },
+    "name": "Exit"
+  },
+  {
+    "__type__": "cc.animation.State",
+    "__editorExtras__": {
+      "name": "",
+      "id": "5a5b5459-7956-403c-8e9c-ea6720d21678",
+      "clone": null,
+      "centerX": 125,
+      "centerY": 0
+    },
+    "name": "Any"
+  },
+  {
+    "__type__": "cc.animation.Motion",
+    "__editorExtras__": {
+      "name": "",
+      "id": "e47f5fbd-4f31-422c-9db5-752a816d392b",
+      "clone": null,
+      "centerX": -8.324324324324408,
+      "centerY": -43.5832490663271
+    },
+    "name": "Blend 1D",
+    "_components": [],
+    "motion": {
+      "__id__": 7
+    },
+    "speed": 1,
+    "speedMultiplier": "",
+    "speedMultiplierEnabled": false,
+    "transitionInEventBinding": {
+      "__id__": 13
+    },
+    "transitionOutEventBinding": {
+      "__id__": 14
+    }
+  },
+  {
+    "__type__": "cc.animation.AnimationBlend1D",
+    "__editorExtras__": {
+      "name": "",
+      "id": "f3ddb5cd-092e-468a-ae74-444cf6937907",
+      "clone": null,
+      "autoThreshold": true,
+      "centerX": -15,
+      "centerY": -3
+    },
+    "name": "Blend 1D",
+    "_items": [
+      {
+        "__id__": 8
+      },
+      {
+        "__id__": 10
+      }
+    ],
+    "param": {
+      "__id__": 12
+    }
+  },
+  {
+    "__type__": "cc.animation.AnimationBlend1DItem",
+    "motion": {
+      "__id__": 9
+    },
+    "threshold": 0
+  },
+  {
+    "__type__": "cc.animation.ClipMotion",
+    "__editorExtras__": {
+      "name": "",
+      "id": "d16f0831-049e-41f1-b681-66f6e17a69a0",
+      "clone": null,
+      "centerX": 144.41176470588238,
+      "centerY": -67.11764705882356
+    },
+    "clip": {
+      "__uuid__": "0c0633a9-04d0-401d-8eee-a9e892a83dbc@18d6f",
+      "__expectedType__": "cc.AnimationClip"
+    }
+  },
+  {
+    "__type__": "cc.animation.AnimationBlend1DItem",
+    "motion": {
+      "__id__": 11
+    },
+    "threshold": 1
+  },
+  {
+    "__type__": "cc.animation.ClipMotion",
+    "__editorExtras__": {
+      "name": "",
+      "id": "6073c869-d781-4167-8eba-922c1b7407a2",
+      "clone": null,
+      "centerX": 144.41176470588238,
+      "centerY": 19.941176470588232
+    },
+    "clip": {
+      "__uuid__": "3ed99347-98f7-4cf9-b314-c460f053349e@18d6f",
+      "__expectedType__": "cc.AnimationClip"
+    }
+  },
+  {
+    "__type__": "cc.animation.BindableNumber",
+    "variable": "move",
+    "value": 0
+  },
+  {
+    "__type__": "cc.animation.AnimationGraphEventBinding",
+    "methodName": ""
+  },
+  {
+    "__type__": "cc.animation.AnimationGraphEventBinding",
+    "methodName": ""
+  },
+  {
+    "__type__": "cc.animation.Transition",
+    "__editorExtras__": null,
+    "from": {
+      "__id__": 3
+    },
+    "to": {
+      "__id__": 6
+    },
+    "conditions": []
+  },
+  {
+    "__type__": "cc.animation.PlainVariable",
+    "_type": 0,
+    "_value": 0
+  }
+]

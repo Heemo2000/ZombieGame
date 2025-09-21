@@ -1,9 +1,7 @@
 import { _decorator, Component, Node, BoxCollider, RigidBody, physics, PhysicsSystem, geometry,Vec2, Vec3, math, IVec3Like,
-    IQuatLike,
     Quat,
-    log,
-    GeometryRenderer,
-    Color
+    //log,
+    EventHandler
  } from 'cc';
 
 import { PhysicsGroup } from '../core/PhysicsGroup'
@@ -29,6 +27,17 @@ export class CharacterMovement extends Component {
     
     @property
     private groundCheckRadius: number = 1.0;
+
+    @property({
+        type: PhysicsGroup,
+        visible: true
+    })
+    private surroundingsGroup: PhysicsGroup = PhysicsGroup.DEFAULT;
+
+    @property({
+        type: EventHandler
+    })
+    public OnMove: EventHandler[] = []
     
     private rigidBody: RigidBody;
     private boxCollider: BoxCollider;
@@ -71,7 +80,7 @@ export class CharacterMovement extends Component {
         let checkRay = new geometry.Ray(this.node.worldPosition.x, this.node.worldPosition.y, this.node.worldPosition.z,
                                         moveDirection.x, moveDirection.y, moveDirection.z);
 
-        let obstructionGroup = PhysicsGroup.WORLD;
+        let obstructionGroup = this.surroundingsGroup;
 
         let halfExtent: IVec3Like = this.boxCollider.size.multiplyScalar(0.5);//{x: this.boxCollider.size.x / 2.0, y: this.boxCollider.size.y / 2.0, z: this.boxCollider.size.z/2.0};
         
@@ -117,6 +126,7 @@ export class CharacterMovement extends Component {
         
         let requiredVel = moveDirection.clone().multiplyScalar(moveSpeed).add(new Vec3(0.0, this.velocityY, 0.0));
         this.rigidBody.setLinearVelocity(requiredVel);
+        EventHandler.emitEvents(this.OnMove, moveInput);
         
         if(moveInput.x == 0.0 && moveInput.y == 0.0)
         {

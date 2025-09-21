@@ -1,0 +1,186 @@
+{
+  "ver": "2.3.13",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "0c0633a9-04d0-401d-8eee-a9e892a83dbc",
+  "files": [
+    "__original-animation-0.cconb"
+  ],
+  "subMetas": {
+    "16491": {
+      "importer": "texture",
+      "uuid": "0c0633a9-04d0-401d-8eee-a9e892a83dbc@16491",
+      "displayName": "",
+      "id": "16491",
+      "name": "Map #18.texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": false,
+        "imageUuidOrDatabaseUri": "db://assets/Textures/US_soldier_simple.tga"
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "53b13": {
+      "importer": "gltf-mesh",
+      "uuid": "0c0633a9-04d0-401d-8eee-a9e892a83dbc@53b13",
+      "displayName": "",
+      "id": "53b13",
+      "name": "MESH_US_Infantry_simple.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 1006
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "18d6f": {
+      "importer": "gltf-animation",
+      "uuid": "0c0633a9-04d0-401d-8eee-a9e892a83dbc@18d6f",
+      "displayName": "",
+      "id": "18d6f",
+      "name": "mixamo.com.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 2,
+        "sample": 30,
+        "span": {
+          "from": 0,
+          "to": 8.333333015441895
+        },
+        "events": []
+      },
+      "ver": "1.0.17",
+      "imported": true,
+      "files": [
+        ".cconb"
+      ],
+      "subMetas": {}
+    },
+    "438fe": {
+      "importer": "gltf-skeleton",
+      "uuid": "0c0633a9-04d0-401d-8eee-a9e892a83dbc@438fe",
+      "displayName": "",
+      "id": "438fe",
+      "name": "UnnamedSkeleton.skeleton",
+      "userData": {
+        "gltfIndex": 0,
+        "jointsLength": 20
+      },
+      "ver": "1.0.1",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "b42b8": {
+      "importer": "gltf-material",
+      "uuid": "0c0633a9-04d0-401d-8eee-a9e892a83dbc@b42b8",
+      "displayName": "",
+      "id": "b42b8",
+      "name": "US_Soldier_simple.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "503de": {
+      "importer": "gltf-scene",
+      "uuid": "0c0633a9-04d0-401d-8eee-a9e892a83dbc@503de",
+      "displayName": "",
+      "id": "503de",
+      "name": "Idle.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [
+      {
+        "name": "Map #18",
+        "uri": "db://assets/Textures/US_soldier_simple.tga"
+      }
+    ],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "animationImportSettings": [
+      {
+        "name": "mixamo.com",
+        "duration": 8.333333015441895,
+        "fps": 30,
+        "splits": [
+          {
+            "name": "mixamo.com",
+            "from": 0,
+            "to": 8.333333015441895,
+            "wrapMode": 2,
+            "previousId": "18d6f"
+          }
+        ]
+      }
+    ],
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "0c0633a9-04d0-401d-8eee-a9e892a83dbc@53b13"
+      ],
+      "skeletons": [
+        "0c0633a9-04d0-401d-8eee-a9e892a83dbc@438fe"
+      ],
+      "textures": [
+        "0c0633a9-04d0-401d-8eee-a9e892a83dbc@16491"
+      ],
+      "materials": [
+        "0c0633a9-04d0-401d-8eee-a9e892a83dbc@b42b8"
+      ],
+      "scenes": [
+        "0c0633a9-04d0-401d-8eee-a9e892a83dbc@503de"
+      ]
+    }
+  }
+}
