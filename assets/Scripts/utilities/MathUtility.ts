@@ -83,6 +83,15 @@ export class MathUtility
                Math.abs(first.y - second.y) <= MathUtility.epsilon &&
                Math.abs(first.z - second.z) <= MathUtility.epsilon;
     }
+
+    public static rotateVector(vec: Vec3, axis: Vec3, angle: number): Vec3
+    {
+        let result: Vec3 = new Vec3();
+
+        Vec3.transformQuat(result, vec, Quat.fromAxisAngle(new Quat(), axis, math.toRadian(angle)));
+    
+        return result;
+    }
 }
 
 
