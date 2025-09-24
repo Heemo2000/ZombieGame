@@ -72,7 +72,7 @@ export class TargetFollower extends Component {
             let targetPosition = this.target.worldPosition.clone().add(this.offset);
             //log("Target Position: " + targetPosition);
 
-            let temp = Vec3.ZERO.clone();
+            let temp = this.node.worldPosition.clone();
             Vec3.lerp(temp , this.followPosition, targetPosition, this.followSpeed * deltaTime);
             this.followPosition.set(temp);
 
