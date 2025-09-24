@@ -442,7 +442,7 @@
     "_enabled": true,
     "__prefab": null,
     "checkAngle": 90,
-    "maxCheckRadius": 5,
+    "maxCheckRadius": 20,
     "checkInterval": 0.1,
     "checkGroup": 8,
     "shouldShowDetected": true,
