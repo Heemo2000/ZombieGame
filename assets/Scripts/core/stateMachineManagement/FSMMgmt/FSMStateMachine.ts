@@ -3,6 +3,7 @@ import { IFSMPredicate } from "./IFSMPredicate";
 import { IFSMState } from "./IFSMState";
 import { IFSMTransition } from "./IFSMTransition";
 import { FSMTransition } from "./FSMTransition";
+import { log } from "cc";
 
 export class FSMStateMachine 
 {
@@ -14,6 +15,7 @@ export class FSMStateMachine
     {
         this.current = null;
         this.nodes = new Map<string, FSMStateNode>();
+        this.anyTransitions = new Set<IFSMTransition>();
     }
 
     public onUpdate(deltaTime: number): void
@@ -23,43 +25,23 @@ export class FSMStateMachine
         {
             this.changeState(transition.to);
         }
+
         this.current.state?.onUpdate(deltaTime);
     }
 
     public onLateUpdate(deltaTime: number): void
     {
         this.current.state?.onLateUpdate(deltaTime);
-    }
-
-    public changeState(state: IFSMState): void
-    {
-        if(this.current.state == null || this.current.state.toString() == state.toString())
-        {
-            return;
-        }
-
-        let previousState = this.current?.state;
-        let nextNode = this.nodes.get(state.toString());
-        if(nextNode == null || nextNode == undefined)
-        {
-            return;
-        }
-
-        let nextState = nextNode.state;
-        previousState.onExit();
-        nextState?.onEnter();
-
-        this.current = nextNode;
-    }
+    }    
 
     public setState(state: IFSMState): void
     {
-        this.current = this.nodes.get[state.toString()];
-        if(this.current == undefined)
+        this.current = this.nodes.get(state.toString());
+        if(this.current === undefined)
         {
+            log("Couldn't find state node");
             return;
         }
-
         this.current.state?.onEnter();
     }
 
@@ -73,14 +55,11 @@ export class FSMStateMachine
             }
         }
 
-        if(this.current != null || this.current != undefined)
+        for(let transition of this.current.transitions)
         {
-            for(let transition of this.current.transitions)
+            if(transition.condition.evaluate())
             {
-                if(transition.condition.evaluate())
-                {
-                    return transition;
-                }
+                return transition;
             }
         }
         
@@ -89,23 +68,62 @@ export class FSMStateMachine
 
     public addTransition(from: IFSMState, to: IFSMState, condition: IFSMPredicate): void 
     {
-        this.getOrAddNode(from).addTransition(this.getOrAddNode(to).state, condition);
+        let fromNode = this.getOrAddNode(from);
+        //log("From node state: " + fromNode.state.toString());
+
+        let toNode = this.getOrAddNode(to);
+        //log("To node state: " + toNode.state.toString());
+
+        fromNode.addTransition(toNode.state, condition);
     }
         
     public addAnyTransition(to: IFSMState, condition: IFSMPredicate): void  {
         this.anyTransitions.add(new FSMTransition(this.getOrAddNode(to).state, condition));
     }
 
-    getOrAddNode(state: IFSMState): FSMStateNode 
+    private changeState(state: IFSMState): void
     {
-        var node = this.nodes.get(state.toString());
+        if(this.current.state == null || this.current.state.toString() == state.toString())
+        {
+            //log("Either current state is null or already in the transitioning state");
+            return;
+        }
+
+        let previousState = this.current?.state;
+        let nextNode = this.nodes.get(state.toString());
+        if(nextNode == null || nextNode == undefined)
+        {
+            //log("Either next node is null or undefined");
+            return;
+        }
+
+        let nextState = nextNode.state;
+        previousState.onExit();
+        nextState?.onEnter();
+
+        this.current = nextNode;
+    }
+
+    private getOrAddNode(state: IFSMState): FSMStateNode 
+    {
+        let node = this.nodes.get(state.toString());
             
-        if (node == null) {
+        if (node === undefined) {
+            //log("Creating new state node: " + state.toString());
             node = new FSMStateNode(state);
             this.nodes.set(state.toString(), node);
         }
         
         return node;
+    }
+
+    private printStateTransitions(node: FSMStateNode): void
+    {
+        log("For " + node.state.toString());
+        for(let t of node.transitions)
+        {
+            log("-->" + t.to.toString());
+        }
     }
 }
 

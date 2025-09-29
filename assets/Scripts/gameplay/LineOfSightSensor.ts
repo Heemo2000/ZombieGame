@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, PhysicsSystem, geometry, math, Vec3, Color, Quat, log } from 'cc';
+import { _decorator, Component, Node, PhysicsSystem, geometry, math, Vec3, Color, Quat, log, Enum } from 'cc';
 import { PhysicsGroup } from '../core/PhysicsGroup';
 import { VisualDebug } from '../core/VisualDebug';
 import { MathUtility } from '../utilities/MathUtility';
@@ -15,19 +15,19 @@ export class LineOfSightSensor extends Component {
 
     @property
     ({
-        range:[0.1, 5.0]
+        range:[0.1, 30.0]
     })
     private maxCheckRadius: number = 3.0;
     
     @property
     ({
-        min: 0.1
+        min: 0.01
     })
     private checkInterval: number = 0.1;
     
     @property
     ({
-        type: PhysicsGroup,
+        type: Enum(PhysicsGroup),
         visible: true
     })
     private checkGroup: PhysicsGroup = PhysicsGroup.DEFAULT;
@@ -35,17 +35,31 @@ export class LineOfSightSensor extends Component {
     @property
     private shouldShowDetected: boolean = true;
 
+    @property
+    ({
+        type: Color,
+        visible: true,
+        serializable: true
+    })
+    private debugColor: Color;
+
     private currentTime: number = 0.0;
     private detectedTargets: Node[] = [];
     private sphereCheckRay: geometry.Ray = null;
     private lineCheckRay: geometry.Ray = null;
     
+    
+    public getDetectedTargets(): Node[]
+    {
+        return this.detectedTargets;
+    }
+
     private handleDetection(): void
     {
         this.sphereCheckRay.o = this.node.worldPosition.clone();
         this.detectedTargets = [];
         
-        if(PhysicsSystem.instance.sweepSphere(this.sphereCheckRay, this.maxCheckRadius, this.checkGroup, 0.1))
+        if(PhysicsSystem.instance.sweepSphere(this.sphereCheckRay, this.maxCheckRadius, this.checkGroup, this.maxCheckRadius * 2.0))
         {
             for(let result of PhysicsSystem.instance.sweepCastResults)
             {
@@ -69,7 +83,7 @@ export class LineOfSightSensor extends Component {
 
                 if(PhysicsSystem.instance.raycastClosest(this.lineCheckRay, -1, this.maxCheckRadius))
                 {
-                    log("Line check node name: " + PhysicsSystem.instance.raycastClosestResult.collider.node.name);
+                    //log("Line check node name: " + PhysicsSystem.instance.raycastClosestResult.collider.node.name);
                     let lineCheckColliderUUID = PhysicsSystem.instance.raycastClosestResult.collider.uuid;
                     
                     if(lineCheckColliderUUID !== result.collider.uuid)
@@ -101,10 +115,8 @@ export class LineOfSightSensor extends Component {
         let right: Vec3 = MathUtility.rotateVector(this.node.forward.clone().negative(), this.node.up.clone(), this.checkAngle/2.0);
 
         
-        VisualDebug.getInstance().drawLine(origin, origin.clone().add(left.clone().multiplyScalar(this.maxCheckRadius)), Color.WHITE);
-        VisualDebug.getInstance().drawLine(origin, origin.clone().add(right.clone().multiplyScalar(this.maxCheckRadius)), Color.WHITE);
-
-        //VisualDebug.getInstance().drawLine(origin, origin.clone().add(this.node.forward.clone().multiplyScalar(this.maxCheckRadius)), Color.WHITE);
+        VisualDebug.getInstance().drawLine(origin, origin.clone().add(left.clone().multiplyScalar(this.maxCheckRadius)), this.debugColor.clone());
+        VisualDebug.getInstance().drawLine(origin, origin.clone().add(right.clone().multiplyScalar(this.maxCheckRadius)), this.debugColor.clone());
     }
 
     start() 

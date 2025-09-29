@@ -5,8 +5,8 @@ import { IFSMTransition } from "./IFSMTransition";
 
 export class FSMStateNode
 {
-    public state: IFSMState;
-    public transitions: Set<IFSMTransition>;
+    public readonly state: IFSMState;
+    public readonly transitions: Set<IFSMTransition>;
             
     public constructor(state: IFSMState) {
         this.state = state;

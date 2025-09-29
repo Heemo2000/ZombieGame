@@ -1,10 +1,18 @@
-import { Component, Node } from 'cc';
+import { Component, Node, log } from 'cc';
 import { IFSMState } from '../../../core/stateMachineManagement/FSMMgmt/IFSMState';
+import { PatrollingEnemy } from './PatrollingEnemy';
 
 export class PatrollingEnemyAttackState implements IFSMState {
 
-    onEnter(): void {
+    private enemy: PatrollingEnemy = null;
         
+    constructor(enemy : PatrollingEnemy)
+    {
+        this.enemy = enemy;
+    }
+        
+    onEnter(): void {
+       log("Attacking"); 
     }
     onUpdate(deltaTime: number): void {
         
