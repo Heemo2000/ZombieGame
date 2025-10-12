@@ -15,7 +15,7 @@ export class PatrollingEnemyAttackState implements IFSMState {
        log("Attacking"); 
     }
     onUpdate(deltaTime: number): void {
-        
+        this.enemy.stop();
     }
     onLateUpdate(deltaTime: number): void {
         

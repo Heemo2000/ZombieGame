@@ -23,7 +23,7 @@ export class FSMStateMachine
         let transition = this.getTransition();
         if(transition != null)
         {
-            this.changeState(transition.to);
+            this.changeState(transition);
         }
 
         this.current.state?.onUpdate(deltaTime);
@@ -66,7 +66,7 @@ export class FSMStateMachine
         return null;
     }
 
-    public addTransition(from: IFSMState, to: IFSMState, condition: IFSMPredicate): void 
+    public addTransition(from: IFSMState, to: IFSMState, condition: IFSMPredicate, onBeforeTransition: ()=> void = null): void 
     {
         let fromNode = this.getOrAddNode(from);
         //log("From node state: " + fromNode.state.toString());
@@ -74,29 +74,35 @@ export class FSMStateMachine
         let toNode = this.getOrAddNode(to);
         //log("To node state: " + toNode.state.toString());
 
-        fromNode.addTransition(toNode.state, condition);
+        fromNode.addTransition(toNode.state, condition, onBeforeTransition);
     }
         
-    public addAnyTransition(to: IFSMState, condition: IFSMPredicate): void  {
-        this.anyTransitions.add(new FSMTransition(this.getOrAddNode(to).state, condition));
+    public addAnyTransition(to: IFSMState, condition: IFSMPredicate, onBeforeTransition: ()=> void = null): void  {
+        this.anyTransitions.add(new FSMTransition(this.getOrAddNode(to).state, condition, onBeforeTransition));
     }
 
-    private changeState(state: IFSMState): void
+    private changeState(transition: IFSMTransition): void
     {
-        if(this.current.state == null || this.current.state.toString() == state.toString())
+        if(transition.to == null || this.current != null && this.current.state.toString() == transition.to.toString())
         {
-            //log("Either current state is null or already in the transitioning state");
+            log("Either transitioning state is null or State machine is already in " + this.current.state.toString() + " state");
             return;
         }
 
         let previousState = this.current?.state;
-        let nextNode = this.nodes.get(state.toString());
+        let nextNode = this.nodes.get(transition.to.toString());
         if(nextNode == null || nextNode == undefined)
         {
             //log("Either next node is null or undefined");
             return;
         }
 
+        if(transition instanceof FSMTransition)
+        {
+            (transition as FSMTransition).onBeforeTransition?.();
+            //log("On before transition called");
+        }
+        
         let nextState = nextNode.state;
         previousState.onExit();
         nextState?.onEnter();

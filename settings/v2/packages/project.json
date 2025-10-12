@@ -17,13 +17,18 @@
       {
         "index": 3,
         "name": "WORLD"
+      },
+      {
+        "index": 4,
+        "name": "ENEMY"
       }
     ],
     "collisionMatrix": {
-      "0": 9,
-      "1": 12,
-      "2": 2,
-      "3": 11
+      "0": 31,
+      "1": 31,
+      "2": 31,
+      "3": 31,
+      "4": 31
     },
     "allowSleep": true
   }

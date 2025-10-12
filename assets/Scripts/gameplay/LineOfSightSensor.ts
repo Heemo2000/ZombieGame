@@ -21,7 +21,7 @@ export class LineOfSightSensor extends Component {
     
     @property
     ({
-        min: 0.01
+        min: 0.0
     })
     private checkInterval: number = 0.1;
     
@@ -59,17 +59,16 @@ export class LineOfSightSensor extends Component {
         this.sphereCheckRay.o = this.node.worldPosition.clone();
         this.detectedTargets = [];
         
-        if(PhysicsSystem.instance.sweepSphere(this.sphereCheckRay, this.maxCheckRadius, this.checkGroup, this.maxCheckRadius * 2.0))
+        if(PhysicsSystem.instance.sweepSphere(this.sphereCheckRay, this.maxCheckRadius, this.checkGroup))
         {
             for(let result of PhysicsSystem.instance.sweepCastResults)
             {
                 //log("Overlap detected node: " + result.collider.node.name);
-                let position = result.collider.node.worldPosition.clone();
+                let position = result.hitPoint.clone();
                 let direction = position.subtract(this.sphereCheckRay.o.clone()).normalize();
                 let angle: number = math.toDegree(Vec3.signedAngle(this.node.forward.clone().negative(), direction, this.node.up.clone()));
-                
-                
 
+                //log("Overlap node angle: " + angle);
                 if(!(angle >= -this.checkAngle/2.0 && angle <= this.checkAngle/2.0))
                 {
                     continue;
@@ -135,14 +134,14 @@ export class LineOfSightSensor extends Component {
             this.handleDetectedVisual();
         }
 
+        this.currentTime += deltaTime;
+
         if(this.currentTime >= this.checkInterval)
         {
             this.currentTime = 0.0;
             this.handleDetection();
             return;
         }
-
-        this.currentTime += deltaTime;
     }
 
 

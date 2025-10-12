@@ -13,9 +13,9 @@ export class FSMStateNode
         this.transitions = new Set<IFSMTransition>();
     }
     
-    public addTransition(to: IFSMState, condition: IFSMPredicate): void 
+    public addTransition(to: IFSMState, condition: IFSMPredicate, onBeforeTransition: ()=> void): void 
     {
-        this.transitions.add(new FSMTransition(to, condition));
+        this.transitions.add(new FSMTransition(to, condition, onBeforeTransition));
     }
 
 
