@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, PhysicsSystem, geometry, math, Vec3, Color, Quat, log, Enum } from 'cc';
+import { _decorator, Component, Node, PhysicsSystem, geometry, math, Vec3, Color, log, Enum } from 'cc';
 import { PhysicsGroup } from '../core/PhysicsGroup';
 import { VisualDebug } from '../core/VisualDebug';
 import { MathUtility } from '../utilities/MathUtility';
@@ -9,7 +9,7 @@ export class LineOfSightSensor extends Component {
     
     @property
     ({
-        range:[60.0, 180.0]
+        range:[60.0, 360.0]
     })
     private checkAngle: number = 90.0;
 
@@ -47,7 +47,17 @@ export class LineOfSightSensor extends Component {
     private detectedTargets: Node[] = [];
     private sphereCheckRay: geometry.Ray = null;
     private lineCheckRay: geometry.Ray = null;
-    
+
+
+    public getCheckAngle() : number
+    {
+        return this.checkAngle;
+    }
+
+    public getMaxCheckRadius() : number
+    {
+        return this.maxCheckRadius;
+    }
     
     public getDetectedTargets(): Node[]
     {
@@ -58,18 +68,18 @@ export class LineOfSightSensor extends Component {
     {
         this.sphereCheckRay.o = this.node.worldPosition.clone();
         this.detectedTargets = [];
-        
+        //VisualDebug.getInstance()?.drawWireSphere(this.sphereCheckRay.o.clone(), this.maxCheckRadius, Color.YELLOW);
         if(PhysicsSystem.instance.sweepSphere(this.sphereCheckRay, this.maxCheckRadius, this.checkGroup))
         {
             for(let result of PhysicsSystem.instance.sweepCastResults)
             {
                 //log("Overlap detected node: " + result.collider.node.name);
-                let position = result.hitPoint.clone();
+                let position = result.collider.node.worldPosition.clone();
                 let direction = position.subtract(this.sphereCheckRay.o.clone()).normalize();
-                let angle: number = math.toDegree(Vec3.signedAngle(this.node.forward.clone().negative(), direction, this.node.up.clone()));
+                let angle: number = math.toDegree(Vec3.signedAngle(this.node.forward.negative(), direction, Vec3.UP.clone()));
 
                 //log("Overlap node angle: " + angle);
-                if(!(angle >= -this.checkAngle/2.0 && angle <= this.checkAngle/2.0))
+                if(angle < -this.checkAngle/2.0 || angle > this.checkAngle/2.0)
                 {
                     continue;
                 }
@@ -123,6 +133,7 @@ export class LineOfSightSensor extends Component {
         this.currentTime = 0.0;
         this.sphereCheckRay = new geometry.Ray(this.node.worldPosition.x, this.node.worldPosition.y, this.node.worldPosition.z, 0.0, -1.0, 0.0);
         this.lineCheckRay = new geometry.Ray(this.node.worldPosition.x, this.node.worldPosition.y, this.node.worldPosition.z, 0.0, 0.0, 1.0);
+        
     }
 
     update(deltaTime: number) 
