@@ -171,5 +171,8 @@
       "value": false,
       "version": ""
     }
+  },
+  "macroConfig": {
+    "ENABLE_WEBGL_HIGHP_STRUCT_VALUES": true
   }
 }
