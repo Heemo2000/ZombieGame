@@ -38,9 +38,6 @@ export class Page extends Component {
     private exitDirection: Direction = Direction.NONE;
 
     @property
-    ({
-        type: CCBoolean
-    })
     private shouldExitOnNewPagePush: boolean = false;
 
     @property({

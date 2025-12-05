@@ -28,7 +28,6 @@ export class TargetFollower extends Component {
 
     @property(
         {
-            type: Vec3,
             visible: true
         }
     )

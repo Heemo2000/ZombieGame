@@ -81,8 +81,11 @@ export class CharacterMovement extends Component {
         
         if(moveInput.x == 0.0 && moveInput.y == 0.0)
         {
+            this.rigidBody.setAngularVelocity(Vec3.ZERO.clone());
             return;
         }
+        
+
         let targetAngle = Vec3.signedAngle(new Vec3(0.0, 0.0, 1), moveDirection.clone(), Vec3.UP.clone());
         targetAngle = math.toDegree(targetAngle);
 

@@ -43,17 +43,9 @@ export class SoundManager extends Component {
     })
     private sfxEnabled: boolean = true;
 
-    
-    private static instance: SoundManager = null;
-
     private activeSoundEmitters: SoundEmitter[] = [];
 
     private soundEmitterPool: ObjectPool<SoundEmitter>;
-
-    public static getInstance(): SoundManager
-    {
-        return SoundManager.instance;
-    }
 
     public play(data: SoundData, position: Vec3) : void
     {
@@ -193,16 +185,7 @@ export class SoundManager extends Component {
         emitter.node.destroy();
     }
 
-    protected onLoad(): void {
-        if(SoundManager.instance == null)
-        {
-            SoundManager.instance = this;    
-        }
-        else
-        {
-            this.destroy();
-        }        
-    }
+    
 
 
     start() 
@@ -224,8 +207,7 @@ export class SoundManager extends Component {
 
     protected onDestroy(): void 
     {
-        this.soundEmitterPool.clear();
-        SoundManager.instance = null;    
+        this.soundEmitterPool.clear();   
     }
 }
 

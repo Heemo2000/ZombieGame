@@ -37,7 +37,6 @@ export class LineOfSightSensor extends Component {
 
     @property
     ({
-        type: Color,
         visible: true,
         serializable: true
     })

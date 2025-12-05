@@ -48,6 +48,7 @@ export class PatrollingEnemySuspiciousState implements IFSMState
             return;
         }
 
+        /*
         let destination = this.enemy.getSuspiciousPosition();
         let squareDistance = Vec3.squaredDistance(this.enemy.node.worldPosition, destination);
         if(squareDistance > this.enemy.getStopDistance() * this.enemy.getStopDistance() &&
@@ -77,6 +78,7 @@ export class PatrollingEnemySuspiciousState implements IFSMState
                 return;
             }
         }
+        */
     }
     
     onLateUpdate(deltaTime: number): void {

@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Vec2, Vec3, PhysicsSystem, geometry, error, log, Color, warn } from 'cc';
+import { _decorator, Component, Node, Vec2, Vec3, PhysicsSystem, geometry, error, log, Color, warn, Enum, CCInteger } from 'cc';
 import { Grid } from '../utilities/Grid';
 import { AStarPathNode } from './AStarPathNode';
 import { PriorityQueue } from '../utilities/PriorityQueue';
@@ -12,24 +12,32 @@ const { ccclass, property } = _decorator;
 @ccclass('AStarPathfinding')
 export class AStarPathfinding extends Component {
     @property({
-        min: 1
+        min: 0.5
     })
     private cellSize: number = 1;
 
     @property({
-        min:5
+        min:5,
+        type: CCInteger
     }) 
     private width: number = 5;
     
     @property({
-        min:5
+        min:5,
+        type: CCInteger
     })
     private height: number = 5;
 
     @property
+    ({
+        type: Enum(PhysicsGroup),
+        visible: true
+    })
+    private obstructionMask: PhysicsGroup = PhysicsGroup.DEFAULT;
+    
+    @property
     private shouldShowGrid: boolean = false;
     
-    private static instance: AStarPathfinding = null;
     private diagonalCost: number = 14;
     private straightCost: number = 10;
     private grid: Grid<AStarPathNode> = null;
@@ -39,15 +47,9 @@ export class AStarPathfinding extends Component {
     private closeSet: PriorityQueue<AStarPathNode> = null;
     
     private path: Vec3[] = [];
-    public static getInstance(): AStarPathfinding
-    {
-        return this.instance;
-    }
 
     public checkGrid(): void
     {
-        let checkGroup = PhysicsGroup.GROUND | PhysicsGroup.WORLD;
-
         for(let i = 0; i < this.grid.getWidth(); i++)
         {
             for(let j = 0; j < this.grid.getHeight(); j++)
@@ -60,14 +62,14 @@ export class AStarPathfinding extends Component {
                 let checkPosition = this.getWorldPosition(i,j); //this.getWorldPosition(i,j).add(Vec3.UP.clone().multiplyScalar(this.cellSize)).clone();
                 let checkRay = new geometry.Ray(checkPosition.x, checkPosition.y, checkPosition.z, 0.0 -1.0, 0.0);
                 //checkRay.o = checkPosition.clone();
-                let walkable = PhysicsSystem.instance.sweepSphereClosest(checkRay, this.cellSize, checkGroup, this.cellSize, true);
+                let walkable = !PhysicsSystem.instance.sweepSphereClosest(checkRay, this.cellSize/2.0, this.obstructionMask, this.cellSize, true);
                 node.setWalkable(walkable);
 
                 //log("Is walkable on (" + i + ", " + j + "): " + walkable);
-                if(!walkable)
-                {
-                    log("Node at (" + i + ", " + j + "): is not walkable");    
-                }               
+                // if(!walkable)
+                // {
+                //     log("Node at (" + i + ", " + j + "): is not walkable");    
+                // }               
 
                 this.grid.setItem(node,i,j);
             }
@@ -191,19 +193,36 @@ export class AStarPathfinding extends Component {
         {
             for(let j = 0; j < this.height; j++)
             {
+                let node = this.grid.getItem(i,j);
                 let worldPosition = this.getWorldPosition(i,j);
-                let showColor = Color.RED;
+                let showColor = (node.isWalkable()) ? Color.RED : Color.BLACK;
 
-                VisualDebug.getInstance().drawWireCube(worldPosition, Vec3.ONE.clone().multiplyScalar(this.cellSize), showColor);    
+                let topLeftForward = worldPosition.clone().subtract3f(-this.cellSize/2.0, this.cellSize/2.0, -this.cellSize/2.0);
+                let topLeftBackward = worldPosition.clone().subtract3f(-this.cellSize/2.0, this.cellSize/2.0, this.cellSize/2.0);
+                
+                let bottomLeftForward = worldPosition.clone().subtract3f(-this.cellSize/2.0, -this.cellSize/2.0, -this.cellSize/2.0);
+                let bottomLeftBackward = worldPosition.clone().subtract3f(-this.cellSize/2.0, -this.cellSize/2.0, this.cellSize/2.0);
+  
+                let topRightForward = worldPosition.clone().subtract3f(this.cellSize/2.0, this.cellSize/2.0, -this.cellSize/2.0);
+                let bottomRightBackward = worldPosition.clone().subtract3f(this.cellSize/2, -this.cellSize/2.0, this.cellSize/2.0);
+
+
+                VisualDebug.getInstance().drawLine(topLeftBackward, topLeftForward, showColor);
+                VisualDebug.getInstance().drawLine(bottomLeftBackward, bottomLeftForward, showColor);
+                VisualDebug.getInstance().drawLine(bottomLeftBackward, topLeftBackward, showColor);
+                VisualDebug.getInstance().drawLine(bottomLeftBackward, bottomRightBackward, showColor);
+                VisualDebug.getInstance().drawLine(topLeftForward, topRightForward, showColor);
+
+                //VisualDebug.getInstance().drawWireCube(worldPosition, Vec3.ONE.clone().multiplyScalar(this.cellSize), showColor);    
             }    
         }
     }
 
-    public showPath(): void
+    public showPath(path: Vec3[]): void
     {
         for(let i = 0; i < this.path.length; i++)
         {
-            let worldPosition = this.path[i].clone();
+            let worldPosition = path[i].clone();
             VisualDebug.getInstance().drawWireCube(worldPosition, Vec3.ONE.clone().multiplyScalar(this.cellSize), Color.BLACK);
         }
     }
@@ -333,29 +352,20 @@ export class AStarPathfinding extends Component {
 
     protected onLoad(): void {
         
-        if(AStarPathfinding.instance == null)
+        this.openSet = new PriorityQueue<AStarPathNode>(this.compareNode);
+        this.closeSet = new PriorityQueue<AStarPathNode>(this.compareNode);
+        this.grid = new Grid<AStarPathNode>(this.width, this.height, this.createNode.bind(this));
+        let width = this.grid.getWidth();
+        let height = this.grid.getHeight();
+        
+        for(let i = 0; i < width; i++)
         {
-            AStarPathfinding.instance = this;
-            this.openSet = new PriorityQueue<AStarPathNode>(this.compareNode);
-            this.closeSet = new PriorityQueue<AStarPathNode>(this.compareNode);
-
-            this.grid = new Grid<AStarPathNode>(this.width, this.height, this.createNode.bind(this));
-            let width = this.grid.getWidth();
-            let height = this.grid.getHeight();
-            
-            for(let i = 0; i < width; i++)
+            for(let j = 0; j < height; j++)
             {
-                for(let j = 0; j < height; j++)
-                {
-                    let node = this.grid.getItem(i, j);
-                    node.setInGridPos(new Vec2(i,j));
-                    this.grid.setItem(node, i ,j);
-                }    
-            }
-        }
-        else
-        {
-            this.destroy();
+                let node = this.grid.getItem(i, j);
+                node.setInGridPos(new Vec2(i,j));
+                this.grid.setItem(node, i ,j);
+            }    
         }
     }
 

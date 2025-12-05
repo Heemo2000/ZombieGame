@@ -1,5 +1,5 @@
 import { _decorator, Component, Node, Toggle, EventHandler, Vec3, input, EventMouse, Input, log, geometry, CameraComponent } from 'cc';
-import { SoundManager } from '../soundManagement/SoundManager';
+import { GlobalReferencesManager } from '../gameplay/GlobalReferencesManager';
 import { SoundData } from '../soundManagement/SoundData';
 //import { Constants } from '../core/Constants';
 const { ccclass, executionOrder, property } = _decorator;
@@ -41,15 +41,15 @@ export class SoundTest extends Component {
     private toggleMusic(): void
     {
         log("Toggling music");
-        let muteStatus = SoundManager.getInstance().getMusicMuteStatus();
-        SoundManager.getInstance().setMusicMuteStatus(!muteStatus);
+        let muteStatus = GlobalReferencesManager.getInstance().getSoundManager().getMusicMuteStatus();
+        GlobalReferencesManager.getInstance().getSoundManager().setMusicMuteStatus(!muteStatus);
     }
 
     private toggleSFX(): void
     {
         log("Toggling SFX");
-        let muteStatus = SoundManager.getInstance().getSFXMuteStatus();
-        SoundManager.getInstance().setSFXMuteStatus(!muteStatus);
+        let muteStatus = GlobalReferencesManager.getInstance().getSoundManager().getSFXMuteStatus();
+        GlobalReferencesManager.getInstance().getSoundManager().setSFXMuteStatus(!muteStatus);
     }
 
     private onMousePressed(event: EventMouse)
@@ -74,7 +74,7 @@ export class SoundTest extends Component {
             {
                 let playSoundPos = Vec3.add(new Vec3(), ray.o, Vec3.multiplyScalar(new Vec3(), ray.d, t));
                 //log("SFX play position: " + playSoundPos);
-                SoundManager.getInstance().play(this.sfxData, playSoundPos);
+                GlobalReferencesManager.getInstance().getSoundManager().play(this.sfxData, playSoundPos);
             }
         }
 
@@ -88,8 +88,8 @@ export class SoundTest extends Component {
 
     start() {
 
-        SoundManager.getInstance().setMusicMuteStatus(false);
-        SoundManager.getInstance().setSFXMuteStatus(false);
+        GlobalReferencesManager.getInstance().getSoundManager().setMusicMuteStatus(false);
+        GlobalReferencesManager.getInstance().getSoundManager().setSFXMuteStatus(false);
 
         this.musicToggle.isChecked = true;
         this.sfxToggle.isChecked = true;
@@ -109,7 +109,7 @@ export class SoundTest extends Component {
         this.sfxToggle.checkEvents.push(eventToToggleSFX);
         input.on(Input.EventType.MOUSE_DOWN, this.onMousePressed, this);
         
-        SoundManager.getInstance().play(this.musicData, Vec3.ZERO.clone());
+        GlobalReferencesManager.getInstance().getSoundManager().play(this.musicData, Vec3.ZERO.clone());
     }
 
     protected onDestroy(): void {
